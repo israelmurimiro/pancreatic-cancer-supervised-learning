@@ -1,31 +1,84 @@
-# Supervised Learning Analysis of Urinary Biomarkers for Pancreatic Cancer
+---
 
-## Project Overview
-This project applies supervised machine learning methods to the Debernardi et al. (2020) urinary biomarker dataset to predict pancreatic cancer diagnosis from non-invasive urinary biomarkers and demographic variables.
+# 🤖 Supervised Machine Learning: Pancreatic Cancer Diagnosis
 
-## Dataset
-The dataset contains 590 patients with measurements of four urinary biomarkers (creatinine, LYVE1, REG1B, TFF1), age, sex, and diagnosis (healthy, benign pancreatic condition, or pancreatic ductal adenocarcinoma). Source: Debernardi et al., PLOS Medicine, 2020.
+This project implements a multi-model supervised learning pipeline to classify pancreatic health status based on urinary biomarkers. By comparing classical statistical models against advanced ensemble techniques, the project explores the predictive capacity of non-invasive biomarkers in distinguishing healthy, benign, and malignant pancreatic conditions.
 
-## Methods
-- Data preprocessing: outlier correction, log transformation, standardisation
-- Baseline models: dummy classifier, multinomial logistic regression
-- Regularised regression: LASSO with cross-validation
-- Generative classifiers: LDA, QDA, Naive Bayes
-- Tree-based methods: single CART with cost-complexity pruning, Random Forest, XGBoost with two-stage tuning
-- Support vector machine with RBF kernel
-- Model evaluation: confusion matrices, ROC curves, AUC, per-class metrics
-- Model interpretation: odds ratios, variable importance, SHAP values
-- Subgroup analysis by sex and age
-- Benchmarking against plasma CA19-9 (where available)
+---
 
-## Key Findings
-- XGBoost achieved the highest test accuracy (62.5%) with strong PDAC detection (76.7% recall)
-- LYVE1 was the dominant predictor across all models
-- Tree-based ensembles outperformed linear models, confirming non-linear biomarker relationships
-- Substantial sex disparity: 76.2% accuracy for females vs 50.0% for males
+## 📊 Project Overview
 
-## R Packages Required
-nnet, glmnet, MASS, e1071, randomForest, xgboost, rpart, pROC, caret
+The study analyzes a dataset of 590 patients, leveraging four key urinary biomarkers (**LYVE1, REG1B, TFF1, Creatinine**) alongside demographic features. The core objective is to determine whether machine learning models can outperform traditional diagnostic benchmarks and provide interpretability into biomarker-driven risk profiles.
 
-## How to Run
-Open `supervised_analysis.Rmd` in RStudio and knit to PDF or HTML.
+---
+
+## 🛠️ Methodology
+
+The analysis employs a robust pipeline to handle high-dimensional clinical data and class imbalance:
+
+* **Preprocessing:** Log-transformation of biomarker concentrations and feature standardization to ensure model convergence.
+* **Model Hierarchy:**
+* **Baseline:** Dummy classifier and Multinomial Logistic Regression.
+* **Regularized Regression:** LASSO for feature selection and shrinkage.
+* **Generative/Probabilistic:** LDA, QDA, and Naive Bayes.
+* **Advanced Ensembles:** CART (pruned), Random Forest, and two-stage tuned XGBoost.
+* **Kernel Methods:** Support Vector Machines (SVM) with RBF kernels.
+
+
+* **Evaluation Framework:** Multi-class performance assessment via confusion matrices, ROC/AUC metrics, and SHAP (SHapley Additive exPlanations) for model interpretability.
+
+---
+
+## 🔑 Key Findings
+
+| Model | Test Accuracy | Performance Insight |
+| --- | --- | --- |
+| **XGBoost** | **62.5%** | Highest predictive power with superior PDAC recall (76.7%). |
+| **Linear Models** | Moderate | Outperformed by ensembles, suggesting non-linear biomarker interactions. |
+| **LYVE1** | Dominant | Consistently identified as the most critical feature across all models. |
+| **Sex Disparity** | Significant | Higher model accuracy for females (76.2%) vs. males (50.0%). |
+
+> **Supplementary Insight:** When simplifying the clinical question from multi-class to binary (PDAC vs. Non-PDAC), models like XGBoost and Random Forest achieved up to **83.0% accuracy**, demonstrating that the biomarkers are highly effective at identifying malignancy, even if they struggle to differentiate between benign and healthy states.
+
+---
+
+## 📂 Repository Structure
+
+```text
+supervised-pancreatic-analysis/
+├── data/               # Processed biomarker dataset
+├── R/                  # ML training scripts & model tuning pipelines
+├── models/             # Saved model objects & hyperparameter configs
+├── reports/            # Performance curves (ROC/AUC) & SHAP visualisations
+├── supervised_analysis.Rmd # Main analysis & benchmarking document
+└── requirements.R      # Project dependency list
+
+```
+
+---
+
+## 🚀 How to Run
+
+1. Ensure **R** and **RStudio** are installed.
+2. Install the necessary machine learning libraries:
+```r
+install.packages(c("nnet", "glmnet", "MASS", "e1071", "randomForest", 
+                   "xgboost", "rpart", "pROC", "caret"))
+
+```
+
+
+3. Open `supervised_analysis.Rmd` in RStudio.
+4. Execute the cells to retrain the models or **Knit** to generate the final analytical report.
+
+---
+
+## 🧠 Model Interpretability & Bias
+
+The analysis highlights a notable performance gap between sexes, suggesting that biomarker thresholds for PDAC may not be sex-invariant. Future iterations should explore sex-stratified thresholds or domain adaptation techniques to mitigate this bias. The use of SHAP values provides a transparent view of how each biomarker contributes to individual patient risk predictions.
+
+---
+
+## 👤 Author
+
+**MURIMIRO ISRAEL** *Date: 2026-06-19*
